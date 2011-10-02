@@ -1,6 +1,7 @@
 package at.fhv.roadrunner;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +13,7 @@ import spider.prototype.services.Controller;
 /**
  * Servlet implementation class RoadrunnerController
  */
-@WebServlet({ "/" })
+@WebServlet({ "/sensor" })
 public class RoadrunnerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -24,14 +25,14 @@ public class RoadrunnerController extends HttpServlet {
 	 * Default constructor.
 	 */
 	public RoadrunnerController() {
-		mController = Controller.getInstance();
-		mAddressMapper = new AddressMapper();
+//		mController = Controller.getInstance();
+//		mAddressMapper = new AddressMapper();
 		
-		if (getServletContext().getAttribute("servicefinder") == null) {
-			
-			new Thread(new ServiceFinder(Controller.getInstance())).start();
-			getServletContext().setAttribute("servicefinder", new Boolean(true));
-		}
+//		if (getServletContext().getAttribute("servicefinder") == null) {
+//			
+//			new Thread(new ServiceFinder(Controller.getInstance())).start();
+//			getServletContext().setAttribute("servicefinder", new Boolean(true));
+//		}
 		
 	}
 
@@ -45,7 +46,7 @@ public class RoadrunnerController extends HttpServlet {
 		String sensor = parseSensor(request);
 		
 		
-		ServiceRequest req = new ServiceRequest(mController, sensor, mAddressMapper);
+//		ServiceRequest req = new ServiceRequest(mController, sensor, mAddressMapper);
 //		req.sendRequest();
 		
 		// implement notify sleep
@@ -53,7 +54,8 @@ public class RoadrunnerController extends HttpServlet {
 //			// sleep while no data received
 //		}
 		
-		response.getWriter().write(req.getData().toString());
+//		response.getWriter().write(req.getData().toString());
+		response.getWriter().write(sensor);
 	}
 
 	/**
@@ -61,16 +63,15 @@ public class RoadrunnerController extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+			HttpServletResponse response) throws ServletException, IOException 
+	{
 		doGet(request, response);
 	}
 
 
-	private String parseSensor(HttpServletRequest request) {
-		
-		System.out.println(request.getContextPath());
-		
-		return null;
+	private String parseSensor(HttpServletRequest request) 
+	{		
+		return request.getQueryString();
 	}
 	
 }

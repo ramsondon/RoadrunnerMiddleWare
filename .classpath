@@ -9,6 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/home/matthias/develop/servlet-api-3.0.20090124.jar"/>
-	<classpathentry kind="lib" path="/home/matthias/fhv/ITM3/UC/SpiderBase.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/SpiderBase"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
