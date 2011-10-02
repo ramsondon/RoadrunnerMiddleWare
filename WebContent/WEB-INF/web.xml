@@ -12,7 +12,7 @@
 
     <servlet-mapping>
       <servlet-name>sensorservlet</servlet-name>
-      <url-pattern>/sensor</url-pattern>
+      <url-pattern>/sensor/*</url-pattern>
     </servlet-mapping>
 
 </web-app>

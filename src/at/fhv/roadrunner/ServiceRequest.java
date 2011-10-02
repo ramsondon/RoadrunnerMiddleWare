@@ -36,10 +36,14 @@ public class ServiceRequest {
 		mAddressMapper = addressMapper;
 	}
 
+	/**
+	 * Sends a request to receive current data of the Sensor of this
+	 * ServiceRequest
+	 */
 	public void sendRequest() {
 		List<YellowPage> pages = mController
 				.getYellowPage(ServiceDescription.Temperature);
-		
+
 		for (YellowPage page : pages) {
 
 			if (mAddressMapper.isEqual(sensor, page)) {
@@ -59,15 +63,20 @@ public class ServiceRequest {
 		}
 	}
 
+	/**
+	 * Checks if data have been received
+	 * 
+	 * @return true if data have been received, else false
+	 */
 	public boolean dataReceived() {
 		return mDataReceived;
 	}
 
 	public char[] getData() {
-		
+
 		char[] data = new char[mData.length];
 		for (int i = 0; i < mData.length; i++) {
-			data[i] = (char)mData[i];
+			data[i] = (char) mData[i];
 		}
 		return data;
 	}

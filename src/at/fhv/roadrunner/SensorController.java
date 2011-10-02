@@ -54,7 +54,8 @@ public class SensorController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		String sensor = parseSensor(request);
-
+		System.out.println("Request Sensor: " + sensor);
+		
 		ServiceRequest req = new ServiceRequest(Controller.getInstance(),
 				sensor, mAddressMapper);
 		try {
@@ -85,8 +86,16 @@ public class SensorController extends HttpServlet {
 		doGet(request, response);
 	}
 
+	/**
+	 * @param request
+	 * @return
+	 */
 	private String parseSensor(HttpServletRequest request) {
-		return request.getQueryString();
+		String sensor = request.getPathInfo();
+		if (sensor != null) {
+			sensor = sensor.replace('/', ' ').trim();
+		}
+		return sensor;
 	}
 
 }
