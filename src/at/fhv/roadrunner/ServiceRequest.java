@@ -3,17 +3,25 @@ package at.fhv.roadrunner;
 import java.util.List;
 
 import spider.prototype.services.Controller;
-import spider.prototype.services.communication.addresses.Address;
 import spider.prototype.services.modules.IDataRequester;
 import spider.prototype.services.yellowpage.ServiceDescription;
 import spider.prototype.services.yellowpage.YellowPage;
 
 public class ServiceRequest {
 
+	/**
+	 * The Spider Protocol Controller
+	 */
 	private Controller mController;
 
+	/**
+	 * The data byte array
+	 */
 	private byte[] mData;
 
+	/**
+	 * Flag for marking if data have been received
+	 */
 	private boolean mDataReceived;
 
 	private String sensor;
@@ -56,11 +64,8 @@ public class ServiceRequest {
 	}
 
 	public char[] getData() {
-		System.out.println("Return testdata 17 in ServiceRequest.getData()");
-		mData = "17".getBytes();
 		
 		char[] data = new char[mData.length];
-		
 		for (int i = 0; i < mData.length; i++) {
 			data[i] = (char)mData[i];
 		}

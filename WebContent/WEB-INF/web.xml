@@ -6,7 +6,7 @@
 
     <servlet>
       <servlet-name>sensorservlet</servlet-name>
-      <servlet-class>at.fhv.roadrunner.RoadrunnerController</servlet-class>
+      <servlet-class>at.fhv.roadrunner.SensorController</servlet-class>
       <load-on-startup>5</load-on-startup>
     </servlet>
 
