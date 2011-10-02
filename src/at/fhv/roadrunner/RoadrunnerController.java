@@ -1,6 +1,8 @@
 package at.fhv.roadrunner;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +39,8 @@ public class RoadrunnerController extends HttpServlet {
 		}
 
 		if (getServletContext().getAttribute(CONTEXT_ATTR_SERVICE_FINDER) == null) {
-
+			System.out
+					.println("Starting service finder");
 			new Thread(new ServiceFinder(Controller.getInstance())).start();
 			getServletContext().setAttribute(CONTEXT_ATTR_SERVICE_FINDER,
 					new Boolean(true));
@@ -55,15 +58,23 @@ public class RoadrunnerController extends HttpServlet {
 
 		ServiceRequest req = new ServiceRequest(Controller.getInstance(),
 				sensor, mAddressMapper);
-		 req.sendRequest();
+		try {
+			req.sendRequest();
 
-		// implement notify sleep
-		 while (!req.dataReceived()) {
-		// // sleep while no data received
-		 }
+			// set timeout to 5 seconds
+			long timeout = 5 * 1000 + (new Date()).getTime();
 
-		response.getWriter().write(req.getData().toString());
-		// response.getWriter().write(sensor);
+			while (!req.dataReceived() && timeout > (new Date()).getTime()) {
+				// sleep while no data received
+			}
+		} catch (Exception e) {
+			System.err.println("ASYNC SERVICE NOT RESPONDING");
+		}
+		if (!req.dataReceived()) {
+			response.sendError(500, "SERVICE NOT AVAILABLE");
+		} else {
+			response.getWriter().write(req.getData());
+		}
 	}
 
 	/**

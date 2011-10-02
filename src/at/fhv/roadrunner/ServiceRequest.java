@@ -55,13 +55,16 @@ public class ServiceRequest {
 		return mDataReceived;
 	}
 
-	public byte[] getData() {
-		mData = new byte[2];
-		mData[0] = '1';
-		mData[1] = '7';
-
+	public char[] getData() {
+		System.out.println("Return testdata 17 in ServiceRequest.getData()");
+		mData = "17".getBytes();
 		
-		return mData;
+		char[] data = new char[mData.length];
+		
+		for (int i = 0; i < mData.length; i++) {
+			data[i] = (char)mData[i];
+		}
+		return data;
 	}
 
 }

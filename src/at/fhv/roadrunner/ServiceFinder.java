@@ -9,8 +9,8 @@ public class ServiceFinder implements Runnable {
 
 	private Controller mSpiderController;
 	private int mSpiderPort = 10034;
-	private int mMaxHops = 15;
-	private String mSpiderInetAddress = "9.9.9.9";
+	private int mMaxHops = 5;
+	private String mSpiderInetAddress = "172.102.16.182";
 
 	public ServiceFinder(Controller controller) {
 		mSpiderController = controller;
@@ -29,6 +29,7 @@ public class ServiceFinder implements Runnable {
 				
 				Thread.sleep(5 * 60 * 1000);
 			} catch (InterruptedException e) {
+				System.out.println("SERVICEFINDER BROADCAST FAILED");
 				e.printStackTrace();
 			}
 		}
