@@ -8,7 +8,7 @@ import spider.prototype.services.yellowpage.ServiceDescription;
 public class ServiceFinder implements Runnable {
 
 	private Controller mSpiderController;
-	private int mSpiderPort = 4711;
+	private int mSpiderPort = 10034;
 	private int mMaxHops = 15;
 	private String mSpiderInetAddress = "9.9.9.9";
 

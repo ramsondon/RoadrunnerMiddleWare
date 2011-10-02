@@ -17,7 +17,7 @@ import spider.prototype.services.Controller;
 public class RoadrunnerController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private Controller mController;
+	private static final String CONTEXT_ATTR_SERVICE_FINDER = "servicefinder";
 
 	private AddressMapper mAddressMapper;
 
@@ -25,23 +25,22 @@ public class RoadrunnerController extends HttpServlet {
 	 * Default constructor.
 	 */
 	public RoadrunnerController() {
-		mController = Controller.getInstance();
 		mAddressMapper = new AddressMapper();
 	}
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		
+
 		if (Controller.getInstance() == null) {
 			Controller.setInstance(new Controller());
 		}
-		
-		if (getServletContext().getAttribute("servicefinder") == null) {
+
+		if (getServletContext().getAttribute(CONTEXT_ATTR_SERVICE_FINDER) == null) {
 
 			new Thread(new ServiceFinder(Controller.getInstance())).start();
-			getServletContext()
-					.setAttribute("servicefinder", new Boolean(true));
+			getServletContext().setAttribute(CONTEXT_ATTR_SERVICE_FINDER,
+					new Boolean(true));
 		}
 	}
 
@@ -54,15 +53,15 @@ public class RoadrunnerController extends HttpServlet {
 
 		String sensor = parseSensor(request);
 
-		ServiceRequest req = new ServiceRequest(mController, sensor,
-				mAddressMapper);
-		// req.sendRequest();
+		ServiceRequest req = new ServiceRequest(Controller.getInstance(),
+				sensor, mAddressMapper);
+		 req.sendRequest();
 
 		// implement notify sleep
-		// while (!req.dataReceived()) {
+		 while (!req.dataReceived()) {
 		// // sleep while no data received
-		// }
-		
+		 }
+
 		response.getWriter().write(req.getData().toString());
 		// response.getWriter().write(sensor);
 	}
@@ -70,7 +69,7 @@ public class RoadrunnerController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
- 	 */
+	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
