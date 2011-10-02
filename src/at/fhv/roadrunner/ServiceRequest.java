@@ -56,6 +56,11 @@ public class ServiceRequest {
 	}
 
 	public byte[] getData() {
+		mData = new byte[2];
+		mData[0] = '1';
+		mData[1] = '7';
+
+		
 		return mData;
 	}
 

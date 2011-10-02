@@ -20,20 +20,29 @@ public class RoadrunnerController extends HttpServlet {
 	private Controller mController;
 
 	private AddressMapper mAddressMapper;
-	
+
 	/**
 	 * Default constructor.
 	 */
 	public RoadrunnerController() {
-//		mController = Controller.getInstance();
-//		mAddressMapper = new AddressMapper();
+		mController = Controller.getInstance();
+		mAddressMapper = new AddressMapper();
+	}
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
 		
-//		if (getServletContext().getAttribute("servicefinder") == null) {
-//			
-//			new Thread(new ServiceFinder(Controller.getInstance())).start();
-//			getServletContext().setAttribute("servicefinder", new Boolean(true));
-//		}
+		if (Controller.getInstance() == null) {
+			Controller.setInstance(new Controller());
+		}
 		
+		if (getServletContext().getAttribute("servicefinder") == null) {
+
+			new Thread(new ServiceFinder(Controller.getInstance())).start();
+			getServletContext()
+					.setAttribute("servicefinder", new Boolean(true));
+		}
 	}
 
 	/**
@@ -42,36 +51,33 @@ public class RoadrunnerController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String sensor = parseSensor(request);
-		
-		
-//		ServiceRequest req = new ServiceRequest(mController, sensor, mAddressMapper);
-//		req.sendRequest();
-		
+
+		ServiceRequest req = new ServiceRequest(mController, sensor,
+				mAddressMapper);
+		// req.sendRequest();
+
 		// implement notify sleep
-//		while (!req.dataReceived()) {
-//			// sleep while no data received
-//		}
+		// while (!req.dataReceived()) {
+		// // sleep while no data received
+		// }
 		
-//		response.getWriter().write(req.getData().toString());
-		response.getWriter().write(sensor);
+		response.getWriter().write(req.getData().toString());
+		// response.getWriter().write(sensor);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
-	 */
+ 	 */
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException 
-	{
+			HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
-
-	private String parseSensor(HttpServletRequest request) 
-	{		
+	private String parseSensor(HttpServletRequest request) {
 		return request.getQueryString();
 	}
-	
+
 }
