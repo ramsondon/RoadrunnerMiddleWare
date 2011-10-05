@@ -6,6 +6,7 @@ import spider.prototype.services.Controller;
 import spider.prototype.services.modules.IDataRequester;
 import spider.prototype.services.yellowpage.ServiceDescription;
 import spider.prototype.services.yellowpage.YellowPage;
+import spider.prototype.utils.BinaryTransformer;
 
 public class ServiceRequest {
 
@@ -17,23 +18,23 @@ public class ServiceRequest {
 	/**
 	 * The data byte array
 	 */
-	private byte[] mData;
+	private int mData;
 
 	/**
 	 * Flag for marking if data have been received
 	 */
 	private boolean mDataReceived;
 
-	private String sensor;
+	private String mSensor;
 
 	private AddressMapper mAddressMapper;
 
 	public ServiceRequest(Controller controller, String sensor,
 			AddressMapper addressMapper) {
 		mController = controller;
-		mData = new byte[0];
 		mDataReceived = false;
 		mAddressMapper = addressMapper;
+		mSensor = sensor;
 	}
 
 	/**
@@ -46,15 +47,17 @@ public class ServiceRequest {
 
 		for (YellowPage page : pages) {
 
-			if (mAddressMapper.isEqual(sensor, page)) {
+			if (mAddressMapper.isEqual(mSensor, page)) {
 
 				mController.sendDataRequest(new IDataRequester() {
 
 					@Override
 					public void onDataResponse(ServiceDescription serviceDesc,
 							int serviceId, byte[] response) {
-						mData = response;
+						mData = BinaryTransformer.toInt(response);
+						//mData = response;
 						mDataReceived = true;
+						System.out.println("onDataResponse: " + serviceId);
 					}
 
 				}, page.getAddress(), page.getServiceDescription(), page
@@ -73,12 +76,9 @@ public class ServiceRequest {
 	}
 
 	public char[] getData() {
-
-		char[] data = new char[mData.length];
-		for (int i = 0; i < mData.length; i++) {
-			data[i] = (char) mData[i];
-		}
-		return data;
+		
+		System.out.println(mData);
+		return Integer.toString(mData).toCharArray();
 	}
 
 }

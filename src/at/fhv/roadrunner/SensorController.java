@@ -68,6 +68,7 @@ public class SensorController extends HttpServlet {
 				// sleep while no data received
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("ASYNC SERVICE NOT RESPONDING");
 		}
 		if (!req.dataReceived()) {
