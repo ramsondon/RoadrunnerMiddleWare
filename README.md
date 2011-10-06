@@ -5,6 +5,7 @@ Execute `install.sh` to download all required libs.
 
 Requirements:
 -------------
+	* openjdk-6
 
 	* SpiderBase.jar git@github.com:ramsondon/SpiderBase-Protocol.git
 
@@ -16,3 +17,5 @@ Requirements:
 			http://tomcat.apache.org/download-70.cgi
 
 	* servlet-api-3.0.20090124.jar
+
+
