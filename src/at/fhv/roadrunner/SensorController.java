@@ -40,7 +40,10 @@ public class SensorController extends HttpServlet {
 		if (getServletContext().getAttribute(CONTEXT_ATTR_SERVICE_FINDER) == null) {
 			System.out
 					.println("Starting service finder");
-			new Thread(new ServiceFinder(Controller.getInstance())).start();
+			Configuration config = new Configuration();
+			config.load();
+			
+			new Thread(new ServiceFinder(Controller.getInstance(), config)).start();
 			getServletContext().setAttribute(CONTEXT_ATTR_SERVICE_FINDER,
 					new Boolean(true));
 		}

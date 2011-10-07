@@ -7,22 +7,21 @@ import spider.prototype.services.yellowpage.ServiceDescription;
 
 public class ServiceFinder implements Runnable {
 
-	private Controller mSpiderController;
-	private int mSpiderPort = Config.LOCAL_PORT;
-	private int mMaxHops = Config.MAX_HOPS;
-	private String mSpiderInetAddress = Config.NEIGHBOUR_ADDRESS;
+	private Controller mProtocolController;
+	private Configuration mConfig;
 
-	public ServiceFinder(Controller controller) {
-		mSpiderController = controller;
+	public ServiceFinder(Controller controller, Configuration config) {
+		mProtocolController = controller;
+		mConfig = config;
 
-		TCPMapper tcpMapper = new TCPMapper(mSpiderPort);
-		tcpMapper.setAddress(new TCPAddress(Config.LOCAL_ADDRESS));
+		TCPMapper tcpMapper = new TCPMapper(mConfig.getLocalServerPort());
+		tcpMapper.setAddress(new TCPAddress(mConfig.getLocalServerAddress()));
 
 		System.out.println("TcpMapper address: " + tcpMapper.getAddress());
 
-		mSpiderController.getCommunicationService().addMapper(tcpMapper);
-		mSpiderController.getCommunicationService().addNeighbour(
-				new TCPAddress(mSpiderInetAddress));
+		mProtocolController.getCommunicationService().addMapper(tcpMapper);
+		mProtocolController.getCommunicationService().addNeighbour(
+				new TCPAddress(mConfig.getNeighbourAddress()));
 	}
 
 	@Override
@@ -30,8 +29,8 @@ public class ServiceFinder implements Runnable {
 		while (true) {
 			try {
 				System.out.println("Broadcast ServiceRequest");
-				mSpiderController.broadcastServiceRequest(
-						ServiceDescription.Temperature, 0, mMaxHops);
+				mProtocolController.broadcastServiceRequest(
+						ServiceDescription.Temperature, 0, mConfig.getMaxHops());
 
 				Thread.sleep(5 * 60 * 1000);
 			} catch (InterruptedException e) {
