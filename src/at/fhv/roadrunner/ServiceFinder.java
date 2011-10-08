@@ -22,6 +22,9 @@ public class ServiceFinder implements Runnable {
 		mProtocolController.getCommunicationService().addMapper(tcpMapper);
 		mProtocolController.getCommunicationService().addNeighbour(
 				new TCPAddress(mConfig.getNeighbourAddress()));
+		
+		System.out.println(mConfig.getLocalServerAddress());
+		System.out.println(mConfig.getLocalServerPort());
 	}
 
 	@Override
