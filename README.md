@@ -1,6 +1,9 @@
 RoadRunnerMiddleWare
 ====================
 
+Edit the WEB-INF/classes/roadrunner.properties before starting the application to set up the required IP Addresses for the Spider Protocol. The neighbour address has to set to connect to a TCP Neighbour.
+
+
 Execute `install.sh` to download all required libs.
 
 Requirements:
