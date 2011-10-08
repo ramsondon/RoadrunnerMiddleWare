@@ -4,24 +4,24 @@
 
 <web-app>
 
-    <display-name>Roadrunner</display-name>  
-   <description>  
-       The Roadrunner Project
-   </description>  
+	<display-name>Roadrunner</display-name>
+	<description>
+		The Roadrunner Project
+    </description>
 
-    <servlet>
-      <servlet-name>sensorservlet</servlet-name>
-      <servlet-class>at.fhv.roadrunner.SensorController</servlet-class>
-      <init-param>  
-          <param-name>config</param-name>  
-          <param-value>WEB-INF/lib/roadrunner.properties</param-value>  
-      </init-param> 
-      <load-on-startup>1</load-on-startup>
-    </servlet>
+	<servlet>
+		<servlet-name>sensorservlet</servlet-name>
+		<servlet-class>at.fhv.roadrunner.SensorController</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>WEB-INF/lib/roadrunner.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
-    <servlet-mapping>
-      <servlet-name>sensorservlet</servlet-name>
-      <url-pattern>/sensor/*</url-pattern>
-    </servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>sensorservlet</servlet-name>
+		<url-pattern>/sensor/*</url-pattern>
+	</servlet-mapping>
 
 </web-app>
